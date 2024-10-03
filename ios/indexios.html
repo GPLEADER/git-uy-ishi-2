@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="mainios.css">
+</head>
+<body>
+<div class="container">
+    <img class="phone" src="../Remove-bg.ai_1727963526699.png" alt="">
+    <div class="inputs">
+        <div class="text">
+            <h3>App Locked</h3>
+        </div>
+        <div id="inputs" class="input">
+            <input type="text" required maxlength="1">
+            <input type="text" required maxlength="1">
+            <input type="text" required maxlength="1">
+            <input type="text" required maxlength="1">
+        </div>
+    </div>
+    <div id="numbers" class="numbers">
+        <button onclick="displayValue(1)" class="number">
+            1
+        </button>
+        <button onclick="displayValue(2)" class="number">
+            2
+        </button>
+        <button onclick="displayValue(3)" class="number">
+            3
+        </button>
+        <button onclick="displayValue(4)" class="number">
+            4
+        </button>
+        <button onclick="displayValue(5)" class="number">
+            5
+        </button>
+        <button onclick="displayValue(6)" class="number">
+            6
+        </button>
+        <button onclick="displayValue(7)" class="number">
+            7
+        </button>
+        <button onclick="displayValue(8)" class="number">
+            8
+        </button>
+        <button onclick="displayValue(9)" class="number">
+            9
+        </button>
+        <div class="icon-num">
+            <button onclick="displayValue(0)" class="number">
+                0
+            </button>
+            <button onclick="clearLastInput()" id="backspace" class="number">
+                <img src="../Vector.svg" alt="">
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    const inputs = document.querySelectorAll("#inputs input");
+    let currentInputIndex = 0;  // Input maydoni indeksini kuzatish
+
+    function displayValue(buttonNumber) {
+        if (currentInputIndex < inputs.length) {
+            inputs[currentInputIndex].value = buttonNumber;  // Tugma qiymatini input maydoniga yozish
+            currentInputIndex++;  // Keyingi inputga o'tish
+            if (currentInputIndex < inputs.length) {
+                inputs[currentInputIndex].focus();  // Navbatdagi inputga fokus qilish
+            }
+        }
+    }
+
+    // Inputdan backspace bosilganda oldingi inputga o'tish
+    inputs.forEach((input, index) => {
+        input.addEventListener("keyup", function (e) {
+            if (e.key === "Backspace" || e.key === "Delete") {
+                this.value = "";  // Hozirgi inputni tozalash
+                if (index > 0) {
+                    currentInputIndex = index - 1;  // Oldingi inputga qaytish
+                    inputs[currentInputIndex].focus();
+                }
+            }
+        });
+    });
+
+    function clearLastInput() {
+        if (currentInputIndex > 0) {
+            currentInputIndex--;  // Oldingi inputga o'tish
+            inputs[currentInputIndex].value = "";  // Hozirgi inputni tozalash
+            inputs[currentInputIndex].focus();  // Fokusni qayta o'sha inputga qo'yish
+        }
+    }
+
+    function displayValue(buttonNumber) {
+        if (currentInputIndex < inputs.length) {
+            inputs[currentInputIndex].value = buttonNumber; // Tugma qiymatini input maydoniga yozish
+            inputs[currentInputIndex].classList.add('active'); // Aktive sinfini qo'shish
+            currentInputIndex++; // Keyingi inputga o'tish
+            if (currentInputIndex < inputs.length) {
+                inputs[currentInputIndex].focus(); // Navbatdagi inputga fokus qilish
+            }
+        }
+    }
+
+    inputs.forEach((input, index) => {
+        input.addEventListener("keyup", function (e) {
+            if (e.key === "Backspace" || e.key === "Delete") {
+                this.value = ""; // Hozirgi inputni tozalash
+                this.classList.remove('active'); // Aktive sinfini olib tashlash
+                this.classList.add('inactive'); // Inaktive sinfini qo'shish
+                if (index > 0) {
+                    currentInputIndex = index - 1; // Oldingi inputga qaytish
+                    inputs[currentInputIndex].focus();
+                }
+            }
+        });
+
+        // Input kiritilganda inactive sinfini olib tashlash
+        input.addEventListener("input", function () {
+            if (this.value) {
+                this.classList.remove('inactive');
+            } else {
+                this.classList.add('inactive');
+            }
+        });
+    });
+
+</script>
+
+</body>
+</html>
